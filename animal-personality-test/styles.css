@@ -1,0 +1,1174 @@
+/* ========================================
+   三江源动物性格测试 - 高原风格样式
+   ======================================== */
+
+/* CSS 变量 - 高原主题色 */
+:root {
+    /* 高原蓝系列 */
+    --plateau-blue-dark: #1a3a5c;
+    --plateau-blue: #2d5a87;
+    --plateau-blue-light: #4a7ba7;
+    --plateau-sky: #6ba3d4;
+    
+    /* 大地色系列 */
+    --earth-brown: #8b7355;
+    --earth-tan: #c4a574;
+    --earth-sand: #e8dcc4;
+    --earth-cream: #f5f0e6;
+    
+    /* 藏式金色 */
+    --tibetan-gold: #d4a84b;
+    --tibetan-gold-light: #f0d78c;
+    
+    /* 动物主题色 */
+    --wolf-gray: #5a6a7a;
+    --gull-brown: #8b6914;
+    --yak-brown: #4a3728;
+    --vulture-dark: #3d3d3d;
+    --fox-orange: #c45c26;
+    
+    /* 功能色 */
+    --success: #4a9c6d;
+    --warning: #d4a84b;
+    --error: #c45c26;
+    
+    /* 文字色 */
+    --text-primary: #2c3e50;
+    --text-secondary: #5a6a7a;
+    --text-light: #ffffff;
+    
+    /* 背景色 */
+    --bg-primary: #f8f6f2;
+    --bg-card: #ffffff;
+    --bg-gradient-start: #e8f4fc;
+    --bg-gradient-end: #f5f0e6;
+    
+    /* 阴影 */
+    --shadow-sm: 0 2px 8px rgba(45, 90, 135, 0.1);
+    --shadow-md: 0 4px 16px rgba(45, 90, 135, 0.15);
+    --shadow-lg: 0 8px 32px rgba(45, 90, 135, 0.2);
+    --shadow-xl: 0 16px 64px rgba(45, 90, 135, 0.25);
+    
+    /* 过渡 */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* 圆角 */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+}
+
+/* ========================================
+    触摸优化 & 性能优化
+    ======================================== */
+
+/* 全局触摸设置 - 移除默认点击高亮和优化触摸操作 */
+* {
+    /* 移除移动端默认的蓝色点击高亮效果 */
+    -webkit-tap-highlight-color: transparent;
+    /* 优化触摸操作：禁用双击缩放，保留平移 */
+    touch-action: manipulation;
+    /* 防止触摸时的延迟 */
+    -webkit-touch-callout: none;
+    /* 防止文本被选中（提升触摸体验） */
+    -webkit-user-select: none;
+    user-select: none;
+    /* 性能优化：GPU加速 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* 允许文本区域和输入框选中文本 */
+input, textarea, [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+html {
+    scroll-behavior: smooth;
+    /* 允许垂直滚动 */
+    touch-action: pan-y;
+}
+
+body {
+    /* 性能优化：优先使用系统字体，最快渲染速度，font-display: swap */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.6;
+    /* 防止iOS橡皮筋效果 */
+    overscroll-behavior-y: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* 容器 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 页面切换 - 性能优化：使用GPU加速的transform属性 */
+.page {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+    min-height: 100vh;
+    padding: 20px;
+    will-change: opacity, transform;
+    contain: layout style paint;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+}
+
+/* ========================================
+   首页样式
+   ======================================== */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at 20% 80%, rgba(107, 163, 212, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 168, 75, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(200, 180, 140, 0.1) 0%, transparent 70%);
+    z-index: -1;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-width: 100%;
+    z-index: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.logo-icon {
+    font-size: 48px;
+    /* 性能优化：只在首页可见时运行动画，使用GPU加速 */
+    animation: float 3s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 首页不可见时暂停动画，节省CPU */
+#home:not(.active) .logo-icon {
+    animation-play-state: paused;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateZ(0); }
+    50% { transform: translateY(-10px) translateZ(0); }
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--plateau-blue-dark);
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--plateau-blue-dark);
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tagline {
+    font-size: 20px;
+    color: var(--tibetan-gold);
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+
+/* 特性展示 */
+.features {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    /* 性能优化：移除box-shadow过渡，改用GPU加速的transform */
+    transition: transform var(--transition-normal);
+    min-width: 120px;
+    contain: layout style paint;
+}
+
+.feature:hover {
+    transform: translateY(-5px) translateZ(0);
+}
+
+/* 移动端优化：移除悬停效果以减少重绘 */
+@media (max-width: 768px) {
+    .feature:hover {
+        transform: none;
+    }
+}
+
+.feature-icon {
+    font-size: 32px;
+}
+
+.feature span:last-child {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* 按钮样式 - 触摸优化 & 性能优化 */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 52px;
+    min-height: 56px;
+    min-width: 120px;
+    background: linear-gradient(135deg, var(--plateau-blue) 0%, var(--plateau-blue-dark) 100%);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    /* 性能优化：只过渡transform和opacity（GPU加速），避免box-shadow重绘 */
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+    text-decoration: none;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) translateZ(0);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) translateZ(0);
+}
+
+/* 移动端优化：移除悬停效果 */
+@media (hover: none) and (pointer: coarse) {
+    .btn-primary:hover {
+        transform: translateY(0) translateZ(0);
+    }
+}
+
+/* 触摸状态 - 提供即时视觉反馈 */
+.btn-primary.touching {
+    transform: scale(0.96);
+    opacity: 0.9;
+}
+
+.btn-arrow {
+    transition: transform var(--transition-fast);
+}
+
+.btn-primary:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+.btn-secondary {
+    padding: 16px 36px;
+    min-height: 52px;
+    min-width: 110px;
+    background: var(--bg-card);
+    color: var(--plateau-blue);
+    border: 2px solid var(--plateau-blue-light);
+    border-radius: var(--radius-xl);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    /* 性能优化：只过渡transform和background-color */
+    transition: transform var(--transition-normal), background-color var(--transition-fast), color var(--transition-fast);
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+    transform: translateZ(0);
+    will-change: transform, background-color;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--plateau-blue);
+    color: var(--text-light);
+}
+
+/* 移动端优化：移除悬停效果 */
+@media (hover: none) and (pointer: coarse) {
+    .btn-secondary:hover:not(:disabled) {
+        background: var(--bg-card);
+        color: var(--plateau-blue);
+    }
+}
+
+.btn-secondary:active:not(:disabled) {
+    transform: scale(0.96) translateZ(0);
+}
+
+.btn-secondary.touching:not(:disabled) {
+    transform: scale(0.96);
+    opacity: 0.9;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 键盘焦点状态 - 无障碍支持 */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+    outline: 3px solid var(--plateau-sky);
+    outline-offset: 2px;
+}
+
+.disclaimer {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* ========================================
+   测试页面样式
+   ======================================== */
+
+.test-header {
+    padding: 20px 0;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--earth-sand);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--plateau-blue) 0%, var(--plateau-sky) 100%);
+    border-radius: var(--radius-xl);
+    transition: width var(--transition-normal);
+    width: 0%;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    min-width: 60px;
+    text-align: right;
+}
+
+.question-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.question-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 48px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    /* 性能优化：使用GPU加速 */
+    animation: cardAppear var(--transition-normal);
+    will-change: opacity, transform;
+    contain: layout style paint;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateZ(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+    }
+}
+
+.question-text {
+    font-size: 22px;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.option {
+    padding: 20px 28px;
+    min-height: 56px;
+    background: var(--bg-primary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    /* 性能优化：只过渡transform和background，避免border-color和box-shadow重绘 */
+    transition: transform var(--transition-normal), background-color var(--transition-fast);
+    text-align: left;
+    font-size: 16px;
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+    will-change: transform, background-color;
+    transform: translateZ(0);
+    contain: layout style paint;
+}
+
+.option:hover {
+    background: var(--bg-card);
+    transform: translateX(5px) translateZ(0);
+}
+
+/* 移动端优化：移除悬停效果 */
+@media (hover: none) and (pointer: coarse) {
+    .option:hover {
+        background: var(--bg-primary);
+        transform: translateX(0) translateZ(0);
+    }
+}
+
+.option:active {
+    transform: scale(0.98) translateZ(0);
+}
+
+.option.touching {
+    transform: scale(0.98) translateZ(0);
+    background: rgba(45, 90, 135, 0.08);
+}
+
+.option.selected {
+    border-color: var(--plateau-blue);
+    background: rgba(45, 90, 135, 0.1);
+    transform: translateX(8px) translateZ(0);
+}
+
+.option.selected.touching {
+    transform: translateX(8px) scale(0.98) translateZ(0);
+}
+
+.option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--plateau-blue);
+    transform: scaleY(0);
+    transition: transform var(--transition-fast);
+    will-change: transform;
+}
+
+.option:focus-visible {
+    outline: 3px solid var(--plateau-sky);
+    outline-offset: 2px;
+}
+
+.option.selected::before {
+    transform: scaleY(1);
+}
+
+/* 导航按钮 */
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 32px 20px;
+}
+
+/* ========================================
+   结果页面样式
+   ======================================== */
+
+.result-container {
+    padding: 40px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.result-header h2 {
+    font-size: 28px;
+    color: var(--plateau-blue-dark);
+    position: relative;
+    display: inline-block;
+}
+
+.result-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--tibetan-gold);
+    border-radius: var(--radius-xl);
+}
+
+.result-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 48px;
+    text-align: center;
+}
+
+.animal-avatar {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-md);
+    /* 性能优化：使用GPU加速 */
+    animation: avatarAppear var(--transition-slow);
+    will-change: opacity, transform;
+    contain: layout style paint;
+}
+
+@keyframes avatarAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg) translateZ(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0) translateZ(0);
+    }
+}
+
+.animal-name {
+    font-size: 36px;
+    color: var(--plateau-blue-dark);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.animal-tagline {
+    font-size: 18px;
+    color: var(--tibetan-gold);
+    font-weight: 500;
+    margin-bottom: 32px;
+}
+
+.traits-container,
+.radar-chart-container,
+.description-container,
+.strategy-container,
+.background-container,
+.match-container,
+.tips-container {
+    margin-bottom: 32px;
+}
+
+.traits-container h4,
+.radar-chart-container h4,
+.description-container h4,
+.strategy-container h4,
+.background-container h4,
+.match-container h4,
+.tips-container h4 {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.trait-tag {
+    padding: 8px 20px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    font-size: 14px;
+    color: var(--plateau-blue);
+    font-weight: 500;
+    /* 性能优化：使用GPU加速，减少动画延迟 */
+    animation: tagAppear 0.3s ease-out backwards;
+    will-change: opacity, transform;
+    transform: translateZ(0);
+}
+
+/* 性能优化：减少动画延迟，加快渲染 */
+.trait-tag:nth-child(1) { animation-delay: 0.05s; }
+.trait-tag:nth-child(2) { animation-delay: 0.1s; }
+.trait-tag:nth-child(3) { animation-delay: 0.15s; }
+.trait-tag:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes tagAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px) translateZ(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+    }
+}
+
+/* 雷达图 */
+.radar-chart-container {
+    position: relative;
+    padding: 20px 0;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#radarChart {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    display: block;
+}
+
+.radar-labels {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.radar-labels span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+}
+
+.description-text,
+.strategy-text,
+.background-text,
+.match-text,
+.tips-text {
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.8;
+    text-align: left;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+/* 野生动物保护提示 */
+.wildlife-notice {
+    margin-top: 32px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(74, 156, 109, 0.1) 0%, rgba(45, 90, 135, 0.1) 100%);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.wildlife-notice p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 8px 0;
+}
+
+.wildlife-notice p:first-child {
+    font-size: 18px;
+    color: var(--plateau-blue);
+    font-weight: 600;
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .tagline {
+        font-size: 18px;
+    }
+
+    .features {
+        gap: 16px;
+    }
+
+    .feature {
+        min-width: 100px;
+        padding: 16px;
+    }
+
+    .btn-primary {
+        padding: 18px 40px;
+        font-size: 16px;
+        min-height: 52px;
+    }
+
+    .question-card {
+        padding: 32px 24px;
+    }
+
+    .question-text {
+        font-size: 18px;
+    }
+
+    .option {
+        padding: 18px 24px;
+        font-size: 15px;
+        min-height: 52px;
+    }
+
+    .result-card {
+        padding: 32px 24px;
+    }
+
+    .btn-secondary {
+        min-height: 52px;
+        padding: 16px 24px;
+    }
+
+    .animal-avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .radar-chart-container {
+        max-width: 320px;
+    }
+}
+
+/* ========================================
+   移动端响应式优化
+   ======================================== */
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .hero {
+        padding: 15px 8px;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-between;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .logo-icon {
+        font-size: 36px;
+    }
+
+    .logo-text {
+        font-size: 22px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .tagline {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .description {
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .features {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .feature {
+        padding: 10px 15px;
+        min-width: 70px;
+    }
+
+    .feature-icon {
+        font-size: 20px;
+    }
+
+    .feature span:last-child {
+        font-size: 12px;
+    }
+
+    .btn-primary {
+        margin-bottom: 12px;
+        padding: 16px 32px;
+    }
+
+    .disclaimer {
+        font-size: 11px;
+        margin-top: 8px;
+    }
+
+    .question-card {
+        padding: 24px 16px;
+    }
+
+    .question-text {
+        font-size: 16px;
+    }
+
+    .option {
+        padding: 18px 20px;
+        font-size: 15px;
+        min-height: 52px;
+    }
+
+    .result-card {
+        padding: 24px 16px;
+    }
+
+    .btn-secondary {
+        min-height: 52px;
+        padding: 16px 24px;
+    }
+
+    .radar-chart-container {
+        max-width: 280px;
+    }
+}
+
+/* ========================================
+   动物主题色
+   ======================================== */
+
+.animal-wolf {
+    background: linear-gradient(135deg, rgba(90, 106, 122, 0.2) 0%, rgba(45, 90, 135, 0.2) 100%);
+}
+
+.animal-gull {
+    background: linear-gradient(135deg, rgba(139, 105, 20, 0.2) 0%, rgba(212, 168, 75, 0.2) 100%);
+}
+
+.animal-yak {
+    background: linear-gradient(135deg, rgba(74, 55, 40, 0.2) 0%, rgba(139, 115, 85, 0.2) 100%);
+}
+
+.animal-vulture {
+    background: linear-gradient(135deg, rgba(61, 61, 61, 0.2) 0%, rgba(90, 90, 90, 0.2) 100%);
+}
+
+.animal-fox {
+    background: linear-gradient(135deg, rgba(196, 92, 38, 0.2) 0%, rgba(212, 168, 75, 0.2) 100%);
+}
+
+/* ========================================
+   动画效果
+   ======================================== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp var(--transition-normal);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   动物图片样式（新增）
+   ======================================== */
+
+.animal-image-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 24px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--bg-card);
+}
+
+.animal-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 350px;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .animal-image-container {
+        max-width: 100%;
+        margin-bottom: 16px;
+    }
+    
+    .animal-image {
+        max-height: 250px;
+    }
+}
+
+/* 动物主题色（16种动物） */
+.color-intj { background: linear-gradient(135deg, rgba(90, 106, 122, 0.2) 0%, rgba(45, 90, 135, 0.2) 100%); }
+.color-infp { background: linear-gradient(135deg, rgba(147, 112, 219, 0.2) 0%, rgba(186, 85, 211, 0.2) 100%); }
+.color-istj { background: linear-gradient(135deg, rgba(74, 55, 40, 0.2) 0%, rgba(139, 115, 85, 0.2) 100%); }
+.color-esfj { background: linear-gradient(135deg, rgba(60, 179, 113, 0.2) 0%, rgba(32, 178, 170, 0.2) 100%); }
+.color-isfp { background: linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 105, 180, 0.2) 100%); }
+.color-istp { background: linear-gradient(135deg, rgba(70, 130, 180, 0.2) 0%, rgba(30, 144, 255, 0.2) 100%); }
+.color-infj { background: linear-gradient(135deg, rgba(75, 0, 130, 0.2) 0%, rgba(138, 43, 226, 0.2) 100%); }
+.color-estj { background: linear-gradient(135deg, rgba(139, 69, 19, 0.2) 0%, rgba(160, 82, 45, 0.2) 100%); }
+.color-entp { background: linear-gradient(135deg, rgba(255, 165, 0, 0.2) 0%, rgba(255, 140, 0, 0.2) 100%); }
+.color-intp { background: linear-gradient(135deg, rgba(72, 61, 139, 0.2) 0%, rgba(123, 104, 238, 0.2) 100%); }
+.color-enfj { background: linear-gradient(135deg, rgba(220, 20, 60, 0.2) 0%, rgba(255, 69, 0, 0.2) 100%); }
+.color-isfj { background: linear-gradient(135deg, rgba(188, 143, 143, 0.2) 0%, rgba(205, 175, 149, 0.2) 100%); }
+.color-entj { background: linear-gradient(135deg, rgba(139, 0, 0, 0.2) 0%, rgba(178, 34, 34, 0.2) 100%); }
+.color-enfp { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%); }
+.color-esfp { background: linear-gradient(135deg, rgba(255, 99, 71, 0.2) 0%, rgba(255, 127, 80, 0.2) 100%); }
+.color-estp { background: linear-gradient(135deg, rgba(210, 105, 30, 0.2) 0%, rgba(233, 150, 122, 0.2) 100%); }
+
+/* 动物头像 emoji 样式优化 */
+.animal-avatar {
+    font-size: 96px;
+    text-align: center;
+    margin: 20px 0;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+
+@media (max-width: 768px) {
+    .animal-avatar {
+        font-size: 72px;
+    }
+
+    .animal-name {
+        font-size: 28px;
+    }
+
+    .navigation {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-secondary {
+        width: 100%;
+        min-height: 52px;
+        padding: 16px 32px;
+    }
+}
+
+/* ========================================
+   Mobile overflow safety
+   ======================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+.container {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.result-container {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.result-card {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .result-card {
+        padding: 32px 20px;
+    }
+
+    .animal-image-container {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .animal-tagline {
+        max-width: 100%;
+        word-break: break-all;
+    }
+
+    .traits {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-card {
+        padding: 24px 14px;
+    }
+
+    .result-header h2 {
+        font-size: 24px;
+    }
+
+    .animal-name {
+        font-size: 24px;
+    }
+
+    .animal-tagline {
+        font-size: 14px;
+    }
+
+    .animal-type {
+        font-size: 14px;
+    }
+
+    .description-text,
+    .strategy-text,
+    .background-text,
+    .match-text,
+    .tips-text {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .trait-tag {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+}

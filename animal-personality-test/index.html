@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#2d5a87">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>三江源动物性格测试 - 寻找你的高原图腾</title>
+    <meta name="description" content="基于大五人格与PDP的高原动物性格测试，探索你内心深处的野性原型">
+    <!-- 性能优化：DNS预解析 -->
+    <link rel="dns-prefetch" href="fonts.googleapis.com">
+    <!-- 性能优化：预连接，提前建立连接 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="modern-overrides.css">
+</head>
+<body>
+    <!-- 页面容器 -->
+    <div class="container">
+        <!-- 动态极光/星空背景 -->
+        <div class="aurora-bg">
+            <div class="aurora-1"></div>
+            <div class="aurora-2"></div>
+            <div class="aurora-3"></div>
+            <div class="stars"></div>
+        </div>
+        
+        <!-- 首页 -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="logo">
+                        <span class="logo-icon">🏔️</span>
+                        <span class="logo-text">三江源</span>
+                    </div>
+                    <h1>动物性格测试</h1>
+                    <p class="tagline">寻找你的高原图腾</p>
+                    <p class="description">
+                        基于大五人格(OCEAN)理论 & PDP行为特质模型<br>
+                        探索你内心深处的野性原型
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <span class="feature-icon">🔬</span>
+                            <span>科学测评</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🐾</span>
+                            <span>16种高原动物</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📊</span>
+                            <span>大五人格雷达图</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="startTest()" role="button" tabindex="0" aria-label="开始测试">
+                        开始测试
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <p class="disclaimer">本测试基于大五人格理论和动物行为生态学设计，仅供娱乐和自我探索，非临床诊断工具</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 测试页面 - 性能优化：延迟加载 -->
+        <section id="test" class="page" data-lazy="true">
+            <div class="test-header">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">第 1 题 / 共 30 题</span>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-card" id="questionCard">
+                    <h2 class="question-text" id="questionText"></h2>
+                    <div class="options" id="options">
+                        <!-- 选项将通过JS动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn-secondary" id="prevBtn" onclick="prevQuestion()" role="button" tabindex="0" aria-label="上一题">
+                    ← 上一题
+                </button>
+                <button class="btn-secondary" id="nextBtn" onclick="nextQuestion()" disabled role="button" tabindex="0" aria-label="下一题">
+                    下一题 →
+                </button>
+            </div>
+        </section>
+
+        <!-- 结果页面 - 性能优化：延迟加载 -->
+        <section id="result" class="page" data-lazy="true">
+            <div class="result-container">
+                <div class="result-header">
+                    <h2>你的高原图腾</h2>
+                </div>
+
+                <div class="result-card">
+                    <!-- 动物图片 -->
+                    <div class="animal-image-container">
+                        <img id="animalImage" class="animal-image" src="" alt="" style="display:none;" onerror="this.style.display='none'">
+                    </div>
+                    
+                    <div class="animal-avatar" id="animalAvatar"></div>
+                    <h3 class="animal-name" id="animalName"></h3>
+                    <p class="animal-tagline" id="animalTagline"></p>
+                    <p class="animal-type" id="animalType"></p>
+
+                    <div class="traits-container">
+                        <h4>核心特质</h4>
+                        <div class="traits" id="traits">
+                            <!-- 特质标签将通过JS动态生成 -->
+                        </div>
+                    </div>
+
+                    <div class="radar-chart-container">
+                        <h4>大五人格维度</h4>
+                        <canvas id="radarChart"></canvas>
+                        <div class="radar-labels" style="display: none;">
+                            <span>开放性(O)</span>
+                            <span>尽责性(C)</span>
+                            <span>外向性(E)</span>
+                            <span>宜人性(A)</span>
+                            <span>神经质(N)</span>
+                        </div>
+                    </div>
+
+                    <div class="description-container">
+                        <h4>性格解读</h4>
+                        <p class="description-text" id="resultDescription"></p>
+                    </div>
+
+                    <div class="strategy-container">
+                        <h4>生存策略 (PDP)</h4>
+                        <p class="strategy-text" id="animalStrategy"></p>
+                    </div>
+
+                    <div class="background-container">
+                        <h4>生灵背景</h4>
+                        <p class="background-text" id="animalBackground"></p>
+                    </div>
+
+                    <div class="match-container">
+                        <h4>最佳伙伴</h4>
+                        <p class="match-text" id="matchText"></p>
+                    </div>
+
+                    <div class="tips-container">
+                        <h4>发展建议</h4>
+                        <p class="tips-text" id="tipsText"></p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="shareResult()" role="button" tabindex="0" aria-label="分享结果">
+                            🔗 分享结果
+                        </button>
+                        <button class="btn-secondary" onclick="restartTest()" role="button" tabindex="0" aria-label="重新测试">
+                            🔄 重新测试
+                        </button>
+                    </div>
+                </div>
+
+                <div class="wildlife-notice">
+                    <p>🦌 守护高原，从了解开始</p>
+                    <p>每份测试我们将捐赠 1 元用于三江源野生动物保护项目</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 先加载题库和动物数据 -->
+    <script src="questions.js"></script>
+    <script src="animals.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
